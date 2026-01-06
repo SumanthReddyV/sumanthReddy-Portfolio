@@ -1,350 +1,627 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sumanth Reddy Vudem | Portfolio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #1a1a2e;
-            color: #e0e0ff;
-        }
-        .nav-link {
-            transition: color 0.3s ease;
-        }
-        .nav-link:hover {
-            color: #8b5cf6; /* A nice purple for hover */
-        }
-        .card {
-            backdrop-filter: blur(10px);
-            background-color: rgba(30, 30, 60, 0.5);
-            border: 1px solid rgba(139, 92, 246, 0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-        .scroll-to-top {
-            display: none;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
-            background-color: #8b5cf6;
-            color: white;
-            border: none;
-            padding: 1rem;
-            border-radius: 9999px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .scroll-to-top:hover {
-            background-color: #7c3aed;
-        }
-        .fade-in {
-            opacity: 0;
-            transition: opacity 0.6s ease-in-out;
-        }
-        .fade-in.visible {
-            opacity: 1;
-        }
-    </style>
-</head>
-<body class="antialiased">
+import React, { useState, useEffect } from 'react';
+import { 
+  Github, 
+  Linkedin, 
+  Mail, 
+  ExternalLink, 
+  Code, 
+  Database, 
+  Cpu, 
+  Globe, 
+  Terminal,
+  BookOpen,
+  Award,
+  Menu,
+  X,
+  MapPin,
+  Bot,
+  Eye,
+  Factory,
+  Server,
+  Shield,
+  Layout,
+  TriangleAlert // Added AlertTriangle import
+} from 'lucide-react';
 
-    <!-- Header & Navigation -->
-    <header class="sticky top-0 z-50 bg-[#1a1a2e]/90 backdrop-blur-md shadow-lg">
-        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="#hero" class="text-2xl font-bold text-purple-400 hover:text-purple-300 transition-colors">Sumanth</a>
-            <div class="hidden md:flex space-x-6">
-                <a href="#about" class="nav-link">About</a>
-                <a href="#experience" class="nav-link">Experience</a>
-                <a href="#projects" class="nav-link">Projects</a>
-                <a href="#skills" class="nav-link">Skills</a>
-                <a href="#contact" class="nav-link">Contact</a>
-            </div>
-            <button id="mobile-menu-button" class="md:hidden text-purple-400 focus:outline-none">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-                </svg>
+// --- Components ---
+
+const Navigation = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navLinks = [
+    { name: 'About', href: '#about' },
+    { name: 'Experience', href: '#experience' },
+    { name: 'Skills', href: '#skills' },
+    { name: 'Projects', href: '#projects' },
+    { name: 'Certifications', href: '#certifications' },
+    { name: 'Contact', href: '#contact' },
+  ];
+
+  return (
+    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-slate-900/95 backdrop-blur-sm shadow-lg py-3' : 'bg-transparent py-5'}`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center">
+          <a href="#" className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">SRV</a>
+          
+          {/* Desktop Nav */}
+          <div className="hidden md:flex space-x-8">
+            {navLinks.map((link) => (
+              <a 
+                key={link.name} 
+                href={link.href} 
+                className="text-slate-300 hover:text-blue-400 transition-colors text-sm font-medium uppercase tracking-wider"
+              >
+                {link.name}
+              </a>
+            ))}
+          </div>
+
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
+            <button 
+             onClick= "{() => setIsOpen(!isOpen)}""
+              className="text-slate-300 hover:text-white p-2"
+              type="button"
+             >
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
-        </nav>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden absolute w-full bg-[#1a1a2e]/95 py-4">
-            <div class="flex flex-col space-y-4 px-4">
-                <a href="#about" class="nav-link">About</a>
-                <a href="#experience" class="nav-link">Experience</a>
-                <a href="#projects" class="nav-link">Projects</a>
-                <a href="#skills" class="nav-link">Skills</a>
-                <a href="#contact" class="nav-link">Contact</a>
-            </div>
+          </div>
         </div>
-    </header>
+      </div>
 
-    <!-- Main Content -->
-    <main class="container mx-auto px-4 py-8 md:py-16 space-y-24">
+      {/* Mobile Nav */}
+      {isOpen && (
+        <div className="md:hidden bg-slate-900 absolute w-full border-b border-slate-800">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            {navLinks.map((link) => (
+              <a 
+                key={link.name} 
+                href={link.href} 
+                onClick="{() => setIsOpen(false)}"
+                className="block px-3 py-2 text-slate-300 hover:text-white hover:bg-slate-800 rounded-md text-base font-medium"
+              >
+                {link.name}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+    </nav>
+  );
+};
 
-        <!-- Hero & About Section -->
-        <section id="about" class="flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-12 min-h-screen pt-16 text-center md:text-left fade-in">
-            <div class="w-full md:w-2/3">
-                <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight">
-                    Hi, I'm <span class="text-purple-400">Sumanth Reddy Vudem</span>
-                </h1>
-                <p class="mt-6 text-xl md:text-2xl text-gray-300">
-                    Currently pursuing Msc. AI @ BTU Cottbus, I combine technical expertise with a problem-solving mindset to create intelligent, user-centric solutions.
+const Hero = () => {
+  const [text, setText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [loopNum, setLoopNum] = useState(0);
+  const [delta, setDelta] = useState(100);
+
+  // Updated phrases based on new resume focus
+  const phrases = [
+    "an AI Master's student.",
+    "specializing in Computer Vision & Industrial IoT.",
+    "building Autonomous Agents & RAG Systems."
+  ];
+
+  useEffect(() => {
+    const ticker = setTimeout(() => {
+      tick();
+    }, delta);
+
+    return () => clearTimeout(ticker);
+  }, [text, delta]);
+
+  const tick = () => {
+    let i = loopNum % phrases.length;
+    let fullText = phrases[i];
+    let updatedText = isDeleting 
+      ? fullText.substring(0, text.length - 1) 
+      : fullText.substring(0, text.length + 1);
+
+    setText(updatedText);
+
+    if (isDeleting) {
+      setDelta(30); // Speed up when deleting
+    }
+
+    if (!isDeleting && updatedText === fullText) {
+      setIsDeleting(true);
+      setDelta(2000); // Pause at end of sentence
+    } else if (isDeleting && updatedText === '') {
+      setIsDeleting(false);
+      setLoopNum(loopNum + 1);
+      setDelta(50); // Reset speed for new typing
+    } else if (!isDeleting && updatedText !== fullText) {
+      setDelta(50); // Normal typing speed
+    }
+  };
+
+  return (
+    <section className="relative min-h-screen flex items-center justify-center bg-slate-950 overflow-hidden pt-16">
+      {/* Background Elements */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight">
+          Sumanth Reddy <span className="text-blue-500">Vudem</span>
+        </h1>
+        
+        {/* Typewriter Effect Section */}
+        <div className="h-32 md:h-24 mb-4 flex items-center justify-center">
+          <p className="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto leading-relaxed">
+            <span className="text-slate-200 font-medium">I am </span>
+            <span className="text-blue-400 font-medium">{text}</span>
+            <span className="animate-pulse text-blue-400 font-bold">|</span>
+          </p>
+        </div>
+
+        {/* Construction Note */}
+        <div className="inline-flex items-center gap-2 px-4 py-2 mb-10 rounded-full bg-yellow-500/10 border border-yellow-500/20 backdrop-blur-sm animate-fade-in-up">
+          <TriangleAlert size={16} className="text-yellow-500" />
+          <span className="text-sm font-medium text-yellow-200/90">
+            Note: This portfolio is currently undergoing updates based on recent projects.
+          </span>
+        </div>
+        
+        <div className="flex flex-wrap justify-center gap-4 mb-12">
+          <a 
+            href="https://www.linkedin.com/in/sumanth-reddy-vudem-278778246" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-medium transition-all transform hover:-translate-y-1"
+          >
+            <Linkedin size={20} /> LinkedIn
+          </a>
+          <a 
+            href="https://github.com/SumanthReddyV" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-full font-medium border border-slate-700 transition-all transform hover:-translate-y-1"
+          >
+            <Github size={20} /> GitHub
+          </a>
+          <a 
+            href="mailto:vudemsumanthreddy@gmail.com" 
+            className="flex items-center gap-2 px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-full font-medium border border-slate-700 transition-all transform hover:-translate-y-1"
+          >
+            <Mail size={20} /> Email Me
+          </a>
+        </div>
+
+        <div className="flex justify-center gap-8 text-slate-500">
+          <div className="flex flex-col items-center gap-2">
+            <Eye size={24} className="text-blue-400" />
+            <span className="text-sm">Computer Vision</span>
+          </div>
+          <div className="flex flex-col items-center gap-2">
+            <Bot size={24} className="text-purple-400" />
+            <span className="text-sm">Agentic AI</span>
+          </div>
+          <div className="flex flex-col items-center gap-2">
+            <Factory size={24} className="text-green-400" />
+            <span className="text-sm">Industrial IoT</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const About = () => {
+  return (
+    <section id="about" className="py-20 bg-slate-900">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="relative">
+            <div className="absolute inset-0 bg-blue-500 rounded-2xl rotate-3 opacity-20"></div>
+            <div className="relative bg-slate-800 p-8 rounded-2xl border border-slate-700 shadow-xl">
+              <h3 className="text-2xl font-bold text-white mb-4">Professional Profile</h3>
+              <p className="text-slate-300 mb-4 leading-relaxed">
+                I am an <strong>AI Master's student</strong> at Brandenburg University of Technology specializing in <strong>Computer Vision</strong> and <strong>Industrial IoT</strong>. My focus lies in automated defect detection, quality assurance, and bridging the gap between AI models and classic control logics in production environments.
+              </p>
+              <p className="text-slate-300 mb-4 leading-relaxed">
+                With a background in IoT and hands-on experience as a Full Stack Developer, I have developed robust CNN architectures for visual inspection and scalable Agentic AI systems.
+              </p>
+              <p className="text-slate-300 leading-relaxed">
+                I am eager to contribute to the optimization of manufacturing processes, leveraging my skills in <strong>PyTorch, OpenCV, and Multi-Agent Systems</strong>.
+              </p>
+            </div>
+          </div>
+          
+          <div className="space-y-6">
+            <h2 className="text-3xl md:text-4xl font-bold text-white">
+              Innovating in <span className="text-blue-500">Vision</span> & <span className="text-purple-500">Automation</span>
+            </h2>
+            <div className="space-y-4">
+              <div className="flex items-start gap-4">
+                <div className="p-3 bg-blue-500/10 rounded-lg text-blue-400 mt-1">
+                  <MapPin size={24} />
+                </div>
+                <div>
+                  <h4 className="text-white font-semibold">Current Location</h4>
+                  <p className="text-slate-400">Cottbus, Brandenburg, Germany</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="p-3 bg-purple-500/10 rounded-lg text-purple-400 mt-1">
+                  <BookOpen size={24} />
+                </div>
+                <div>
+                  <h4 className="text-white font-semibold">Education</h4>
+                  <p className="text-slate-400">MSc. Artificial Intelligence (Apr 2025 - Present)</p>
+                  <p className="text-slate-500 text-sm">Brandenburg University of Technology</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="p-3 bg-green-500/10 rounded-lg text-green-400 mt-1">
+                  <Eye size={24} />
+                </div>
+                <div>
+                  <h4 className="text-white font-semibold">Specialization</h4>
+                  <p className="text-slate-400">Defect Detection & Quality Assurance</p>
+                  <p className="text-slate-500 text-sm">Industrial IoT & Computer Vision</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Skills = () => {
+  const skillCategories = [
+    {
+      title: "Deep Learning & CV",
+      icon: <Eye size={24} />,
+      skills: ["PyTorch", "TensorFlow", "OpenCV", "CNNs", "Object Detection", "3D Vision", "Transformers", "Albumentations"]
+    },
+    {
+      title: "AI & Agentic Systems",
+      icon: <Bot size={24} />,
+      skills: ["RAG Systems", "LangChain", "PydanticAI", "MCP", "Agent-to-Agent (A2A)", "Vector Search", "Embeddings"]
+    },
+    {
+      title: "Backend & Cloud",
+      icon: <Server size={24} />,
+      skills: ["Python", "Java", "Spring Boot", "FastAPI", "Docker", "Azure AI Foundry", "GCP", "REST APIs"]
+    },
+    {
+      title: "IoT & Frontend",
+      icon: <Factory size={24} />,
+      skills: ["Industrial IoT", "Control Logics", "Angular", "ReactJS", "HTML/CSS", "Schema Validation"]
+    }
+  ];
+
+  return (
+    <section id="skills" className="py-20 bg-slate-950">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Technical Expertise</h2>
+          <div className="w-20 h-1 bg-blue-500 mx-auto rounded-full"></div>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {skillCategories.map((category, idx) => (
+            <div key={idx} className="bg-slate-900 p-6 rounded-xl border border-slate-800 hover:border-blue-500/50 transition-all duration-300 hover:shadow-lg group">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-3 bg-slate-800 rounded-lg text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-colors">
+                  {category.icon}
+                </div>
+                <h3 className="text-lg font-bold text-white">{category.title}</h3>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {category.skills.map((skill, sIdx) => (
+                  <span key={sIdx} className="px-3 py-1 bg-slate-800 text-slate-300 text-sm rounded-full border border-slate-700 hover:border-blue-500 hover:text-blue-400 transition-colors">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Experience = () => {
+  const timeline = [
+    {
+      type: "education",
+      role: "MSc. in Artificial Intelligence",
+      org: "Brandenburg University of Technology",
+      date: "Apr 2025 - Present",
+      location: "Cottbus, Germany",
+      desc: "Specializing in Computer Vision, Industrial IoT, and automated defect detection."
+    },
+    {
+      type: "work",
+      role: "Java Full Stack Developer",
+      org: "LTIMindtree",
+      date: "Dec 2024 - Mar 2025",
+      location: "Bhubaneswar, India",
+      desc: "Developed secure full-stack systems using Java, Spring Boot, and Angular. Implemented JWT-based authentication and supported enterprise workflows with robust logging."
+    },
+    {
+      type: "education",
+      role: "B.Tech in Computer Science (IoT)",
+      org: "Guru Nanak Institutions Technical Campus",
+      date: "Nov 2020 - May 2024",
+      location: "Hyderabad, India",
+      desc: "Specialized in Internet of Things. Graduated with honors."
+    },
+    {
+      type: "org",
+      role: "UI/UX Co-Lead",
+      org: "Google Developer Student Clubs",
+      date: "Jul 2022 - May 2023",
+      location: "Hyderabad, India",
+      desc: "Co-led 10+ events attracting 1500+ developers. Mentored 200+ participants."
+    }
+  ];
+
+  return (
+    <section id="experience" className="py-20 bg-slate-900">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Journey</h2>
+          <div className="w-20 h-1 bg-purple-500 mx-auto rounded-full"></div>
+        </div>
+
+        <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-700 before:to-transparent">
+          {timeline.map((item, idx) => (
+            <div key={idx} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+              
+              <div className="flex items-center justify-center w-10 h-10 rounded-full border border-slate-700 bg-slate-900 group-hover:border-blue-500 group-hover:bg-blue-500 text-slate-500 group-hover:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-all">
+                {item.type === 'work' ? <Terminal size={18} /> : item.type === 'education' ? <BookOpen size={18} /> : <Award size={18} />}
+              </div>
+              
+              <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="font-bold text-white">{item.role}</span>
+                  <span className="text-xs text-blue-400 font-medium">{item.date}</span>
+                </div>
+                <div className="text-sm font-semibold text-slate-400 mb-2">{item.org}</div>
+                <div className="text-xs text-slate-500 mb-3 flex items-center gap-1">
+                  <MapPin size={12} /> {item.location}
+                </div>
+                <p className="text-slate-300 text-sm leading-snug">
+                  {item.desc}
                 </p>
-                <div class="mt-8 flex flex-wrap justify-center md:justify-start gap-4">
-                    <a href="www.linkedin.com/in/sumanth-reddy-vudem-278778246" target="_blank" class="px-6 py-3 bg-purple-600 text-white font-semibold rounded-full hover:bg-purple-700 transition-colors shadow-lg">LinkedIn</a>
-                    <a href="https://github.com/sumanthreddyv" target="_blank" class="px-6 py-3 bg-gray-700 text-gray-300 font-semibold rounded-full hover:bg-gray-600 transition-colors shadow-lg">GitHub</a>
-                </div>
+              </div>
             </div>
-            <div class="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden bg-purple-500 flex items-center justify-center text-8xl font-bold text-white shadow-2xl">
-                SRV
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Projects = () => {
+  const projects = [
+    {
+      title: "Industrial Visual Inspection System",
+      tags: ["PyTorch", "OpenCV", "CNN", "Albumentations"],
+      desc: "Developed an automated computer vision pipeline to classify product quality and detect surface defects (rot, shape irregularities). Achieved 96.66% accuracy using custom CNN architecture and contour detection, demonstrating feasibility for manufacturing quality gates.",
+      icon: <Eye className="text-blue-400" />
+    },
+    {
+      title: "Enterprise Agent Integration (MCP)",
+      tags: ["MCP", "Autonomous Agents", "Context Retrieval"],
+      desc: "Built an autonomous agent interacting with a Model Context Protocol (MCP) server to access live enterprise documentation. Enabled dynamic context retrieval to bypass static LLM knowledge cutoffs and provide up-to-date, citation-backed responses.",
+      icon: <Bot className="text-purple-400" />
+    },
+    {
+      title: "Production-Ready RAG Agent",
+      tags: ["LangChain", "FAISS", "NVIDIA Embeddings", "FastAPI"],
+      desc: "Engineered a production-ready RAG system for enterprise knowledge access. Implemented retrieval orchestration using LangChain and PydanticAI for schema-validated responses, exposed via a robust FastAPI interface.",
+      icon: <Database className="text-green-400" />
+    },
+    {
+      title: "Distributed Multi-Agent Orchestration",
+      tags: ["A2A Protocol", "Decentralized AI", "Routing Agents"],
+      desc: "Created a decentralized agentic AI application using the Agent-to-Agent (A2A) protocol. Implemented a routing agent to dynamically coordinate specialized agents via HTTP, improving system scalability and modularity.",
+      icon: <Cpu className="text-yellow-400" />
+    },
+    {
+      title: "Sequential Feedback Triage Pipeline",
+      tags: ["Agentic Workflow", "Automation", "NLP"],
+      desc: "Developed an agentic workflow to modernize business support by automating feedback triage. Chained summarization, classification, and action recommendation agents to convert unstructured feedback into actionable tasks.",
+      icon: <Terminal className="text-red-400" />
+    },
+    {
+      title: "AI-Powered GenAI Platform",
+      tags: ["React", "Spring AI", "GPT-4o", "Full Stack"],
+      desc: "Designed a distributed application integrating OpenAI's GPT-4o to support chat, image generation, and recipe creation. Built with a React frontend and Spring AI backend.",
+      icon: <Layout className="text-indigo-400" />
+    },
+    {
+      title: "Phishing URL Detection System",
+      tags: ["Machine Learning", "Random Forest", "Flask", "Cybersecurity"],
+      desc: "Applied ML to cybersecurity, achieving 95% accuracy in detecting malicious URLs. Conducted extensive feature engineering and deployed the model via a Flask web app.",
+      icon: <Shield className="text-pink-400" />
+    }
+  ];
+
+  return (
+    <section id="projects" className="py-20 bg-slate-950">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Key Projects</h2>
+          <div className="w-20 h-1 bg-green-500 mx-auto rounded-full"></div>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {projects.map((project, idx) => (
+            <div key={idx} className="bg-slate-900 rounded-xl overflow-hidden border border-slate-800 hover:border-slate-600 hover:shadow-2xl transition-all duration-300 group flex flex-col">
+              <div className="p-6 flex-grow">
+                <div className="flex justify-between items-start mb-4">
+                  <div className="p-3 bg-slate-800 rounded-lg border border-slate-700 group-hover:scale-110 transition-transform">
+                    {project.icon}
+                  </div>
+                  <div className="flex gap-2">
+                    <Github size={20} className="text-slate-500 hover:text-white cursor-pointer" />
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">{project.title}</h3>
+                <p className="text-slate-400 text-sm leading-relaxed mb-6">
+                  {project.desc}
+                </p>
+              </div>
+              <div className="px-6 py-4 bg-slate-800/50 border-t border-slate-800">
+                <div className="flex flex-wrap gap-2">
+                  {project.tags.map((tag, tIdx) => (
+                    <span key={tIdx} className="text-xs font-medium text-slate-400 bg-slate-800 px-2 py-1 rounded border border-slate-700">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
-        </section>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
 
-        <!-- Experience Section -->
-        <section id="experience" class="fade-in">
-            <h2 class="text-4xl font-bold text-center mb-12">Professional Experience</h2>
-            <div class="grid md:grid-cols-2 gap-8">
-                <!-- LTIMindtree Card -->
-                <div class="card p-8 rounded-xl shadow-lg">
-                    <div class="flex items-center mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-purple-400 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 18V9m-7 9v-5m-5 5h16a2 2 0 002-2v-4a2 2 0 00-2-2H3a2 2 0 00-2 2v4a2 2 0 002 2z" />
-                        </svg>
-                        <div>
-                            <h3 class="text-2xl font-semibold">Java Full Stack Developer</h3>
-                            <p class="text-purple-300">LTIMindtree | Dec 2024 - Mar 2025</p>
-                        </div>
-                    </div>
-                    <ul class="list-disc list-inside space-y-2 text-gray-300">
-                        <li>Co-led the development of a comprehensive Vehicle Loan Application with dedicated client and user-side functionalities.</li>
-                        <li>Leveraged a full-stack technology set including Java, SpringBoot, Angular, TypeScript, JavaScript, HTML, CSS.</li>
-                        <li>Used JWT for secure authentication and Git for version control.</li>
-                    </ul>
-                </div>
-                <!-- SmartBridge Card -->
-                <div class="card p-8 rounded-xl shadow-lg">
-                    <div class="flex items-center mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-purple-400 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                        </svg>
-                        <div>
-                            <h3 class="text-2xl font-semibold">Salesforce Developer Virtual Internship</h3>
-                            <p class="text-purple-300">SmartBridge | Aug 2023 - Oct 2023</p>
-                        </div>
-                    </div>
-                    <ul class="list-disc list-inside space-y-2 text-gray-300">
-                        <li>Gained expertise in automation and development techniques, including relationship and process automation, flow types and security, Apex programming, testing, and debugging.</li>
-                        <li>Proficient in utilizing development tools like VS Code and its command-line interface (CLI) for efficient development.</li>
-                        <li>Developed skills in front-end development using Lightning Web Components (LWC) and APIs.</li>
-                    </ul>
-                </div>
+const Certifications = () => {
+  const certs = [
+    {
+      name: "Microsoft AI Foundry",
+      issuer: "Microsoft",
+      desc: "Advanced AI application development and deployment."
+    },
+    {
+      name: "RAG Agents with LLM",
+      issuer: "NVIDIA",
+      desc: "Building retrieval-augmented generation agents."
+    },
+    {
+      name: "Deep Learning",
+      issuer: "NVIDIA",
+      desc: "Fundamental concepts of Neural Networks and DL."
+    },
+    {
+      name: "IBM Data Science",
+      issuer: "Coursera / IBM",
+      desc: "Comprehensive Data Science specialization."
+    },
+    {
+      name: "Salesforce Developer Virtual Internship",
+      issuer: "SmartBridge",
+      desc: "Practical experience in Salesforce ecosystem."
+    },
+    {
+      name: "GDSC UI/UX Co-Lead",
+      issuer: "Google",
+      desc: "Leadership in design thinking and user experience."
+    }
+  ];
+
+  return (
+    <section id="certifications" className="py-20 bg-slate-900">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-12">
+          <div>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">Certifications</h2>
+            <div className="w-20 h-1 bg-yellow-500 rounded-full"></div>
+          </div>
+          <p className="text-slate-400 mt-4 md:mt-0">Continuous professional development</p>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {certs.map((cert, idx) => (
+            <div key={idx} className="bg-slate-800 p-6 rounded-lg border border-slate-700 hover:bg-slate-750 transition-colors">
+              <div className="flex justify-between items-start mb-2">
+                <span className="text-yellow-500"><Award size={24} /></span>
+              </div>
+              <h3 className="text-lg font-bold text-white mb-1">{cert.name}</h3>
+              <p className="text-blue-400 text-sm font-medium mb-3">{cert.issuer}</p>
+              <p className="text-slate-400 text-sm">{cert.desc}</p>
             </div>
-        </section>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
 
-        <!-- Projects Section -->
-        <section id="projects" class="fade-in">
-            <h2 class="text-4xl font-bold text-center mb-12">Projects</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- AI-Powered Web App Card -->
-                <div class="card p-6 rounded-xl shadow-lg">
-                    <h3 class="text-2xl font-semibold mb-2"><a href="https://github.com/SumanthReddyV/AI-Powered-WebApp-Chat-Image-Recipe-Generator">AI-Powered Web App</a> </h3>
-                    <p class="text-purple-300 mb-4">Chat, Image & Recipe Generator</p>
-                    <ul class="list-disc list-inside text-gray-300 space-y-1">
-                        <li>Full-stack AI-driven web application with React frontend and Spring Boot backend.</li>
-                        <li>Integrated OpenAI's GPT-40 for AI Chatbot, Image, and Recipe generation features.</li>
-                        <li>Delivered personalized recipe suggestions based on natural language prompts.</li>
-                    </ul>
-                </div>
-                <!-- Phishing Attacks Detection Card -->
-                <div class="card p-6 rounded-xl shadow-lg">
-                    <h3 class="text-2xl font-semibold mb-2"><a href="https://github.com/SumanthReddyV/-Intelligent-Detection-Designs-Of-HTML-URL-Phishing-Attacks">Intelligent Detection of Phishing Attacks</a> </h3>
-                    <p class="text-purple-300 mb-4">Using ML and Support Vector Machine (SVM)</p>
-                    <ul class="list-disc list-inside text-gray-300 space-y-1">
-                        <li>Leveraged ML to tackle the fast-growing cybercrime of Phishing Attacks.</li>
-                        <li>Trained an ML model using a Support Vector Machine (SVM) algorithm on URL characteristics.</li>
-                        <li>The model predicts whether a given URL is normal or potentially malicious.</li>
-                    </ul>
-                </div>
-                <!-- Drinking Water Safety Card -->
-                <div class="card p-6 rounded-xl shadow-lg">
-                    <h3 class="text-2xl font-semibold mb-2"><a href="https://github.com/SumanthReddyV/ML-Approach-for-Estimating-Drinking-Water-Safety-Assessing-Human-Consumption-Suitability"> ML Approach for Estimating Drinking Water Safety</a></h3>
-                    <p class="text-purple-300 mb-4">SVM model for assessing human consumption suitability</p>
-                    <ul class="list-disc list-inside text-gray-300 space-y-1">
-                        <li>Developed a machine learning model to ensure accurate water safety assessments and minimize human error.</li>
-                        <li>Model, trained on an SVM algorithm, predicts water safety based on sample information.</li>
-                        <li>This web-based tool provides a reliable, automated alternative to manual methods.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+const Contact = () => {
+  return (
+    <section id="contact" className="py-20 bg-slate-950 border-t border-slate-900">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">Let's Connect</h2>
+        <p className="text-slate-400 mb-12 text-lg">
+          Currently open for opportunities in Computer Vision, Industrial IoT, and AI Engineering.
+        </p>
 
-        <!-- Skills Section -->
-        <section id="skills" class="fade-in">
-            <h2 class="text-4xl font-bold text-center mb-12">Skills</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Languages Card -->
-                <div class="card p-6 rounded-xl shadow-lg">
-                    <h3 class="text-2xl font-semibold mb-4 text-purple-300">Languages</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="bg-gray-700 text-white px-3 py-1 rounded-full text-sm">Python</span>
-                        <span class="bg-gray-700 text-white px-3 py-1 rounded-full text-sm">Java</span>
-                        <span class="bg-gray-700 text-white px-3 py-1 rounded-full text-sm">C</span>
-                    </div>
-                </div>
-                <!-- Web Card -->
-                <div class="card p-6 rounded-xl shadow-lg">
-                    <h3 class="text-2xl font-semibold mb-4 text-purple-300">Web Technologies</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="bg-gray-700 text-white px-3 py-1 rounded-full text-sm">HTML</span>
-                        <span class="bg-gray-700 text-white px-3 py-1 rounded-full text-sm">CSS</span>
-                        <span class="bg-gray-700 text-white px-3 py-1 rounded-full text-sm">JavaScript</span>
-                        <span class="bg-gray-700 text-white px-3 py-1 rounded-full text-sm">TypeScript</span>
-                        <span class="bg-gray-700 text-white px-3 py-1 rounded-full text-sm">ReactJS</span>
-                        <span class="bg-gray-700 text-white px-3 py-1 rounded-full text-sm">Angular</span>
-                        <span class="bg-gray-700 text-white px-3 py-1 rounded-full text-sm">JWT Security</span>
-                    </div>
-                </div>
-                <!-- ML Tools Card -->
-                <div class="card p-6 rounded-xl shadow-lg">
-                    <h3 class="text-2xl font-semibold mb-4 text-purple-300">ML Tools</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="bg-gray-700 text-white px-3 py-1 rounded-full text-sm">SVM</span>
-                        <span class="bg-gray-700 text-white px-3 py-1 rounded-full text-sm">Pandas</span>
-                        <span class="bg-gray-700 text-white px-3 py-1 rounded-full text-sm">Scikit-learn</span>
-                        <span class="bg-gray-700 text-white px-3 py-1 rounded-full text-sm">Matplotlib</span>
-                        <span class="bg-gray-700 text-white px-3 py-1 rounded-full text-sm">Hugging Face</span>
-                        <span class="bg-gray-700 text-white px-3 py-1 rounded-full text-sm">LangChain</span>
-                        <span class="bg-gray-700 text-white px-3 py-1 rounded-full text-sm">RAG</span>
-                    </div>
-                </div>
-                <!-- Cloud & Data Tools Card -->
-                <div class="card p-6 rounded-xl shadow-lg">
-                    <h3 class="text-2xl font-semibold mb-4 text-purple-300">Cloud & Data Tools</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="bg-gray-700 text-white px-3 py-1 rounded-full text-sm">GCP</span>
-                        <span class="bg-gray-700 text-white px-3 py-1 rounded-full text-sm">Salesforce</span>
-                        <span class="bg-gray-700 text-white px-3 py-1 rounded-full text-sm">MySQL</span>
-                        <span class="bg-gray-700 text-white px-3 py-1 rounded-full text-sm">PostgreSQL</span>
-                        <span class="bg-gray-700 text-white px-3 py-1 rounded-full text-sm">Tableau</span>
-                        <span class="bg-gray-700 text-white px-3 py-1 rounded-full text-sm">Power BI</span>
-                    </div>
-                </div>
-                <!-- Other Tools Card -->
-                <div class="card p-6 rounded-xl shadow-lg">
-                    <h3 class="text-2xl font-semibold mb-4 text-purple-300">Tools</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="bg-gray-700 text-white px-3 py-1 rounded-full text-sm">Git</span>
-                        <span class="bg-gray-700 text-white px-3 py-1 rounded-full text-sm">VS Code</span>
-                        <span class="bg-gray-700 text-white px-3 py-1 rounded-full text-sm">Figma</span>
-                        <span class="bg-gray-700 text-white px-3 py-1 rounded-full text-sm">Adobe Suite</span>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <div className="grid md:grid-cols-3 gap-6">
+          <a href="mailto:vudemsumanthreddy@gmail.com" className="p-6 bg-slate-900 rounded-xl border border-slate-800 hover:border-blue-500 transition-all group">
+            <Mail size={32} className="text-slate-400 group-hover:text-blue-500 mx-auto mb-4 transition-colors" />
+            <h3 className="text-white font-semibold mb-1">Email</h3>
+            <p className="text-slate-500 text-sm break-all">vudemsumanthreddy@gmail.com</p>
+          </a>
+          
+          <a href="https://www.linkedin.com/in/sumanth-reddy-vudem-278778246" target="_blank" rel="noopener noreferrer" className="p-6 bg-slate-900 rounded-xl border border-slate-800 hover:border-blue-500 transition-all group">
+            <Linkedin size={32} className="text-slate-400 group-hover:text-blue-500 mx-auto mb-4 transition-colors" />
+            <h3 className="text-white font-semibold mb-1">LinkedIn</h3>
+            <p className="text-slate-500 text-sm">Connect professionally</p>
+          </a>
 
-        <!-- Contact Section -->
-        <section id="contact" class="text-center fade-in">
-            <h2 class="text-4xl font-bold mb-8">Get In Touch</h2>
-            <p class="text-gray-300 max-w-2xl mx-auto mb-8">I'm always open to new opportunities and collaborations. Feel free to reach out!</p>
-            <div class="flex flex-wrap justify-center gap-6">
-                <a href="mailto:vudemsumanthreddy@gmail.com" class="flex items-center space-x-2 text-purple-400 hover:text-purple-300 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-1 12H4a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v12a2 2 0 01-2 2z" />
-                    </svg>
-                    <span>vudemsumanthreddy@gmail.com</span>
-                </a>
-                <a href="tel:+4915510459313" class="flex items-center space-x-2 text-purple-400 hover:text-purple-300 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                    </svg>
-                    <span>+49 15510459313</span>
-                </a>
-            </div>
-        </section>
+          <a href="https://github.com/SumanthReddyV" target="_blank" rel="noopener noreferrer" className="p-6 bg-slate-900 rounded-xl border border-slate-800 hover:border-blue-500 transition-all group">
+            <Github size={32} className="text-slate-400 group-hover:text-blue-500 mx-auto mb-4 transition-colors" />
+            <h3 className="text-white font-semibold mb-1">GitHub</h3>
+            <p className="text-slate-500 text-sm">Check my code</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+};
 
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-center py-6 mt-12">
-        <p class="text-gray-400">© 2025 Sumanth Reddy Vudem. All rights reserved.</p>
+const Footer = () => {
+  return (
+    <footer className="bg-slate-950 py-8 border-t border-slate-900">
+      <div className="max-w-7xl mx-auto px-4 text-center">
+        <p className="text-slate-600 text-sm">
+          © {new Date().getFullYear()} Sumanth Reddy Vudem. Built with React & Tailwind CSS.
+        </p>
+      </div>
     </footer>
+  );
+};
 
-    <!-- Scroll to Top Button -->
-    <button class="scroll-to-top" id="scrollTopBtn">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-        </svg>
-    </button>
+// --- Main App Component ---
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const mobileMenuBtn = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const navLinks = document.querySelectorAll('a[href^="#"]');
-            const scrollTopBtn = document.getElementById('scrollTopBtn');
-            const sections = document.querySelectorAll('section');
+const App = () => {
+  return (
+    <div className="bg-slate-950 min-h-screen text-slate-200 selection:bg-blue-500 selection:text-white font-sans">
+      <Navigation />
+      <Hero />
+      <About />
+      <Skills />
+      <Experience />
+      <Projects />
+      <Certifications />
+      <Contact />
+      <Footer />
+    </div>
+  );
+};
 
-            // Toggle mobile menu
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-
-            // Smooth scrolling
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80, // Adjust for fixed header
-                            behavior: 'smooth'
-                        });
-                        if (!mobileMenu.classList.contains('hidden')) {
-                             mobileMenu.classList.add('hidden');
-                        }
-                    }
-                });
-            });
-
-            // Show/hide scroll to top button
-            window.addEventListener('scroll', () => {
-                if (window.pageYOffset > 300) {
-                    scrollTopBtn.style.display = 'block';
-                } else {
-                    scrollTopBtn.style.display = 'none';
-                }
-            });
-            scrollTopBtn.addEventListener('click', () => {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            });
-
-            // Fade-in animation on scroll
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, { threshold: 0.2 });
-
-            sections.forEach(section => {
-                observer.observe(section);
-            });
-        });
-    </script>
-
-</body>
-</html>
+export default App;
