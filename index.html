@@ -20,7 +20,7 @@ import {
   Server,
   Shield,
   Layout,
-  TriangleAlert // Added AlertTriangle import
+  AlertTriangle // Added AlertTriangle import
 } from 'lucide-react';
 
 // --- Components ---
@@ -68,10 +68,9 @@ const Navigation = () => {
           {/* Mobile Menu Button */}
           <div className="md:hidden">
             <button 
-             onClick= "{() => setIsOpen(!isOpen)}""
+              onClick="{() => setIsOpen(!isOpen)}" 
               className="text-slate-300 hover:text-white p-2"
-              type="button"
-             >
+            >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
@@ -169,7 +168,7 @@ const Hero = () => {
 
         {/* Construction Note */}
         <div className="inline-flex items-center gap-2 px-4 py-2 mb-10 rounded-full bg-yellow-500/10 border border-yellow-500/20 backdrop-blur-sm animate-fade-in-up">
-          <TriangleAlert size={16} className="text-yellow-500" />
+          <AlertTriangle size={16} className="text-yellow-500" />
           <span className="text-sm font-medium text-yellow-200/90">
             Note: This portfolio is currently undergoing updates based on recent projects.
           </span>
